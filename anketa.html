@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Анкета участника команды</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Mulish:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f1a;
+    --card: #13162a;
+    --border: #1e2240;
+    --accent: #5b6ef5;
+    --accent2: #a78bfa;
+    --text: #e8eaf6;
+    --muted: #7b82b0;
+    --input-bg: #0d0f1a;
+    --success: #34d399;
+    --danger: #ef4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Mulish', sans-serif;
+    min-height: 100vh;
+    padding: 40px 16px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; left: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(91,110,245,0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -200px; right: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(91,110,245,0.15);
+    border: 1px solid rgba(91,110,245,0.35);
+    color: var(--accent2);
+    font-family: 'Unbounded', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 900;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #fff 30%, var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 14px;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .form-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .form-card:nth-child(2) { animation-delay: 0.1s; }
+  .form-card:nth-child(3) { animation-delay: 0.2s; }
+  .form-card:nth-child(4) { animation-delay: 0.3s; }
+  .form-card:nth-child(5) { animation-delay: 0.4s; }
+  .form-card:nth-child(6) { animation-delay: 0.5s; }
+
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .field { margin-bottom: 22px; }
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+  }
+
+  label span {
+    color: var(--accent);
+    margin-left: 3px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'Mulish', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(91,110,245,0.15);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.6;
+  }
+
+  select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235b6ef5' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+  }
+
+  select option {
+    background: #1a1d35;
+    color: var(--text);
+  }
+
+  .radio-group, .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .radio-item, .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .radio-item:hover, .checkbox-item:hover {
+    border-color: var(--accent);
+    background: rgba(91,110,245,0.05);
+    color: var(--text);
+  }
+
+  .radio-item input, .checkbox-item input {
+    width: 16px; height: 16px;
+    accent-color: var(--accent);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .radio-item.selected, .checkbox-item.selected {
+    border-color: var(--accent);
+    background: rgba(91,110,245,0.1);
+    color: var(--text);
+  }
+
+  .scale-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .scale-btn {
+    flex: 1;
+    padding: 10px 4px;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .scale-btn:hover {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  .scale-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    padding: 0 2px;
+  }
+
+  .hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+    box-shadow: 0 8px 30px rgba(91,110,245,0.35);
+    animation: fadeUp 0.6s 0.6s ease both;
+    margin-top: 8px;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(91,110,245,0.5);
+  }
+
+  .submit-btn:active { transform: translateY(0); }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .form-error {
+    display: none;
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.35);
+    color: #fca5a5;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 16px;
+  }
+
+  /* Success screen */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 32px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .success-icon {
+    width: 72px; height: 72px;
+    background: rgba(52,211,153,0.15);
+    border: 2px solid var(--success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-size: 30px;
+    color: var(--success);
+  }
+
+  .success-screen h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: var(--success);
+  }
+
+  .success-screen p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .form-card { padding: 24px 18px; }
+    .scale-btn { font-size: 11px; padding: 9px 2px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="badge">Научно-технологическая команда</div>
+    <h1>Анкета участника</h1>
+    <p class="subtitle">Заполни анкету честно — это поможет нам собрать сильную команду.<br>Все ответы конфиденциальны.</p>
+  </div>
+
+  <form id="teamForm">
+
+    <!-- Личные данные -->
+    <div class="form-card">
+      <div class="section-title">01 — Личные данные</div>
+
+      <div class="field">
+        <label>Имя и Фамилия <span>*</span></label>
+        <input type="text" id="name" placeholder="Например: Алия Сейткали" required>
+      </div>
+
+      <div class="field">
+        <label>Возраст <span>*</span></label>
+        <input type="number" id="age" placeholder="16" min="14" max="20" required>
+      </div>
+
+      <div class="field">
+        <label>Контакт (Telegram / WhatsApp)</label>
+        <input type="text" id="contact" placeholder="@username или номер телефона">
+      </div>
+    </div>
+
+    <!-- Мотивация -->
+    <div class="form-card">
+      <div class="section-title">02 — Мотивация</div>
+
+      <div class="field">
+        <label>Почему ты хочешь присоединиться к команде? <span>*</span></label>
+        <textarea id="motivation" placeholder="Расскажи честно — что тебя привлекает в этом проекте?" required></textarea>
+      </div>
+
+      <div class="field">
+        <label>Что ты хочешь получить от этого опыта? <span>*</span></label>
+        <div class="checkbox-group" id="goals">
+          <label class="checkbox-item"><input type="checkbox" value="Новые знания и навыки"> Новые знания и навыки</label>
+          <label class="checkbox-item"><input type="checkbox" value="Опыт командной работы"> Опыт командной работы</label>
+          <label class="checkbox-item"><input type="checkbox" value="Победа на конкурсе или олимпиаде"> Победа на конкурсе или олимпиаде</label>
+          <label class="checkbox-item"><input type="checkbox" value="Портфолио для будущего"> Портфолио для будущего</label>
+          <label class="checkbox-item"><input type="checkbox" value="Просто интересно попробовать"> Просто интересно попробовать</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Навыки -->
+    <div class="form-card">
+      <div class="section-title">03 — Навыки и роль</div>
+
+      <div class="field">
+        <label>Какая роль тебе ближе всего? <span>*</span></label>
+        <div class="radio-group" id="role">
+          <label class="radio-item"><input type="radio" name="role" value="Исследователь"> 🔍 Исследователь — люблю искать информацию и анализировать</label>
+          <label class="radio-item"><input type="radio" name="role" value="Технический специалист"> 💻 Технический специалист — разбираюсь в технологиях/коде</label>
+          <label class="radio-item"><input type="radio" name="role" value="Автор/Редактор"> ✍️ Автор/Редактор — хорошо пишу и объясняю</label>
+          <label class="radio-item"><input type="radio" name="role" value="Дизайнер"> 🎨 Дизайнер — создаю визуалы и презентации</label>
+          <label class="radio-item"><input type="radio" name="role" value="Докладчик"> 🎤 Докладчик — уверенно выступаю перед аудиторией</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Что ты умеешь делать лучше всего?</label>
+        <textarea id="skills" placeholder="Например: программирование на Python, создание презентаций, поиск научных источников..."></textarea>
+      </div>
+    </div>
+
+    <!-- Доступность -->
+    <div class="form-card">
+      <div class="section-title">04 — Доступность</div>
+
+      <div class="field">
+        <label>Сколько часов в неделю ты можешь уделять проекту? <span>*</span></label>
+        <select id="hours" required>
+          <option value="" disabled selected>Выбери вариант</option>
+          <option value="1-2 часа">1–2 часа</option>
+          <option value="3-5 часов">3–5 часов</option>
+          <option value="6-10 часов">6–10 часов</option>
+          <option value="10+ часов">10+ часов</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Когда тебе удобнее встречаться? <span>*</span></label>
+        <div class="checkbox-group" id="availability">
+          <label class="checkbox-item"><input type="checkbox" value="Будни утром"> Будни утром</label>
+          <label class="checkbox-item"><input type="checkbox" value="Будни после школы"> Будни после школы</label>
+          <label class="checkbox-item"><input type="checkbox" value="Вечером в будни"> Вечером в будни</label>
+          <label class="checkbox-item"><input type="checkbox" value="Выходные"> Выходные</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Есть ли у тебя другие важные обязательства (секции, репетиторы и т.д.)?</label>
+        <input type="text" id="obligations" placeholder="Напиши если есть, или оставь пустым">
+      </div>
+    </div>
+
+    <!-- Совместимость -->
+    <div class="form-card">
+      <div class="section-title">05 — Совместимость</div>
+
+      <div class="field">
+        <label>Как ты реагируешь на критику своей работы? <span>*</span></label>
+        <div class="radio-group" id="feedback">
+          <label class="radio-item"><input type="radio" name="feedback" value="Воспринимаю спокойно, это помогает улучшить работу"> ✅ Воспринимаю спокойно — это помогает улучшить работу</label>
+          <label class="radio-item"><input type="radio" name="feedback" value="Сначала расстраиваюсь, но потом принимаю"> 😐 Сначала расстраиваюсь, но потом принимаю</label>
+          <label class="radio-item"><input type="radio" name="feedback" value="Тяжело, но стараюсь работать над этим"> 😅 Тяжело, но стараюсь работать над этим</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Оцени свою надёжность (выполнять задачи в срок)</label>
+        <div class="scale-row" id="reliability">
+          <button type="button" class="scale-btn" data-val="1">1</button>
+          <button type="button" class="scale-btn" data-val="2">2</button>
+          <button type="button" class="scale-btn" data-val="3">3</button>
+          <button type="button" class="scale-btn" data-val="4">4</button>
+          <button type="button" class="scale-btn" data-val="5">5</button>
+        </div>
+        <div class="scale-labels"><span>Часто опаздываю</span><span>Всегда вовремя</span></div>
+      </div>
+
+      <div class="field">
+        <label>Оцени свою коммуникабельность в команде</label>
+        <div class="scale-row" id="communication">
+          <button type="button" class="scale-btn" data-val="1">1</button>
+          <button type="button" class="scale-btn" data-val="2">2</button>
+          <button type="button" class="scale-btn" data-val="3">3</button>
+          <button type="button" class="scale-btn" data-val="4">4</button>
+          <button type="button" class="scale-btn" data-val="5">5</button>
+        </div>
+        <div class="scale-labels"><span>Предпочитаю молчать</span><span>Очень открытый</span></div>
+      </div>
+
+      <div class="field">
+        <label>Расскажи о случае, когда что-то пошло не так. Что ты сделал?</label>
+        <textarea id="challenge" placeholder="Это поможет нам понять, как ты справляешься с трудностями..."></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Отправить анкету →</button>
+    <div class="form-error" id="formError">Не удалось отправить анкету. Проверь интернет и попробуй ещё раз.</div>
+
+  </form>
+
+  <!-- Success -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">✓</div>
+    <h2>Анкета отправлена!</h2>
+    <p>Спасибо за честные ответы.<br>Лидер команды свяжется с тобой в ближайшее время.</p>
+  </div>
+
+</div>
+
+<script>
+  // ====== ВАЖНО: сюда приходят ответы ======
+  // Все анкеты будут приходить на эту почту.
+  // Чтобы поменять получателя — измени адрес ниже.
+  const RECIPIENT_EMAIL = 'ismatikismatik4@gmail.com';
+  // =========================================
+
+  // Scale buttons
+  document.querySelectorAll('.scale-row').forEach(row => {
+    row.querySelectorAll('.scale-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        row.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  });
+
+  // Checkbox/radio highlight
+  document.querySelectorAll('.radio-item, .checkbox-item').forEach(item => {
+    const input = item.querySelector('input');
+    input.addEventListener('change', () => {
+      if (input.type === 'radio') {
+        document.querySelectorAll('input[name="' + input.name + '"]').forEach(r => {
+          r.closest('.radio-item').classList.remove('selected');
+        });
+      }
+      if (input.checked) item.classList.add('selected');
+      else item.classList.remove('selected');
+    });
+  });
+
+  // Form submit -> email via FormSubmit
+  const form = document.getElementById('teamForm');
+  const errorBox = document.getElementById('formError');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    errorBox.style.display = 'none';
+
+    const get = id => document.getElementById(id).value.trim();
+    const name = get('name');
+    const age = get('age');
+    const contact = get('contact');
+    const motivation = get('motivation');
+    const role = document.querySelector('input[name="role"]:checked')?.value || '—';
+    const skills = get('skills');
+    const hours = get('hours');
+    const obligations = get('obligations');
+    const feedback = document.querySelector('input[name="feedback"]:checked')?.value || '—';
+    const challenge = get('challenge');
+
+    const goals = [...document.querySelectorAll('#goals input:checked')].map(i => i.value).join(', ') || '—';
+    const availability = [...document.querySelectorAll('#availability input:checked')].map(i => i.value).join(', ') || '—';
+
+    const reliabilityBtn = document.querySelector('#reliability .scale-btn.active');
+    const commBtn = document.querySelector('#communication .scale-btn.active');
+    const reliability = reliabilityBtn ? parseInt(reliabilityBtn.dataset.val) : 0;
+    const communication = commBtn ? parseInt(commBtn.dataset.val) : 0;
+
+    // Score (для лидера)
+    const score = reliability + communication;
+    let scoreText = 'Требует внимания';
+    if (score >= 8) scoreText = 'Отличный кандидат';
+    else if (score >= 5) scoreText = 'Хороший потенциал';
+
+    const payload = {
+      _subject: 'Новая анкета: ' + (name || 'без имени'),
+      _template: 'table',
+      _captcha: 'false',
+      'Имя': name,
+      'Возраст': age,
+      'Контакт': contact || '—',
+      'Роль': role,
+      'Цели': goals,
+      'Мотивация': motivation,
+      'Навыки': skills || '—',
+      'Часов в неделю': hours,
+      'Доступность': availability,
+      'Обязательства': obligations || '—',
+      'Реакция на критику': feedback,
+      'Надёжность': reliability + '/5',
+      'Коммуникабельность': communication + '/5',
+      'Трудная ситуация': challenge || '—',
+      'Оценка совместимости (для лидера)': scoreText + ' (' + score + '/10)'
+    };
+
+    const btn = form.querySelector('.submit-btn');
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Отправка...';
+
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/' + RECIPIENT_EMAIL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('Bad response');
+      form.style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = original;
+      errorBox.style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>
