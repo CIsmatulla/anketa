@@ -317,18 +317,6 @@
     transform: none;
   }
 
-  .form-error {
-    display: none;
-    background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.35);
-    color: #fca5a5;
-    border-radius: 12px;
-    padding: 14px 18px;
-    font-size: 13px;
-    line-height: 1.6;
-    margin-top: 16px;
-  }
-
   /* Success screen */
   .success-screen {
     display: none;
@@ -391,7 +379,7 @@
     <p class="subtitle">Заполни анкету честно — это поможет нам собрать сильную команду.<br>Все ответы конфиденциальны.</p>
   </div>
 
-  <form id="teamForm">
+  <form id="teamForm" action="https://formsubmit.co/ismatikismatik4@gmail.com" method="POST">
 
     <!-- Личные данные -->
     <div class="form-card">
@@ -399,17 +387,17 @@
 
       <div class="field">
         <label>Имя и Фамилия <span>*</span></label>
-        <input type="text" id="name" placeholder="Например: Алия Сейткали" required>
+        <input type="text" id="name" name="Имя" placeholder="Например: Алия Сейткали" required>
       </div>
 
       <div class="field">
         <label>Возраст <span>*</span></label>
-        <input type="number" id="age" placeholder="16" min="14" max="20" required>
+        <input type="number" id="age" name="Возраст" placeholder="16" min="14" max="20" required>
       </div>
 
       <div class="field">
         <label>Контакт (Telegram / WhatsApp)</label>
-        <input type="text" id="contact" placeholder="@username или номер телефона">
+        <input type="text" id="contact" name="Контакт" placeholder="@username или номер телефона">
       </div>
     </div>
 
@@ -419,7 +407,7 @@
 
       <div class="field">
         <label>Почему ты хочешь присоединиться к команде? <span>*</span></label>
-        <textarea id="motivation" placeholder="Расскажи честно — что тебя привлекает в этом проекте?" required></textarea>
+        <textarea id="motivation" name="Мотивация" placeholder="Расскажи честно — что тебя привлекает в этом проекте?" required></textarea>
       </div>
 
       <div class="field">
@@ -441,17 +429,17 @@
       <div class="field">
         <label>Какая роль тебе ближе всего? <span>*</span></label>
         <div class="radio-group" id="role">
-          <label class="radio-item"><input type="radio" name="role" value="Исследователь"> 🔍 Исследователь — люблю искать информацию и анализировать</label>
-          <label class="radio-item"><input type="radio" name="role" value="Технический специалист"> 💻 Технический специалист — разбираюсь в технологиях/коде</label>
-          <label class="radio-item"><input type="radio" name="role" value="Автор/Редактор"> ✍️ Автор/Редактор — хорошо пишу и объясняю</label>
-          <label class="radio-item"><input type="radio" name="role" value="Дизайнер"> 🎨 Дизайнер — создаю визуалы и презентации</label>
-          <label class="radio-item"><input type="radio" name="role" value="Докладчик"> 🎤 Докладчик — уверенно выступаю перед аудиторией</label>
+          <label class="radio-item"><input type="radio" name="Роль" value="Исследователь"> 🔍 Исследователь — люблю искать информацию и анализировать</label>
+          <label class="radio-item"><input type="radio" name="Роль" value="Технический специалист"> 💻 Технический специалист — разбираюсь в технологиях/коде</label>
+          <label class="radio-item"><input type="radio" name="Роль" value="Автор/Редактор"> ✍️ Автор/Редактор — хорошо пишу и объясняю</label>
+          <label class="radio-item"><input type="radio" name="Роль" value="Дизайнер"> 🎨 Дизайнер — создаю визуалы и презентации</label>
+          <label class="radio-item"><input type="radio" name="Роль" value="Докладчик"> 🎤 Докладчик — уверенно выступаю перед аудиторией</label>
         </div>
       </div>
 
       <div class="field">
         <label>Что ты умеешь делать лучше всего?</label>
-        <textarea id="skills" placeholder="Например: программирование на Python, создание презентаций, поиск научных источников..."></textarea>
+        <textarea id="skills" name="Навыки" placeholder="Например: программирование на Python, создание презентаций, поиск научных источников..."></textarea>
       </div>
     </div>
 
@@ -461,7 +449,7 @@
 
       <div class="field">
         <label>Сколько часов в неделю ты можешь уделять проекту? <span>*</span></label>
-        <select id="hours" required>
+        <select id="hours" name="Часов в неделю" required>
           <option value="" disabled selected>Выбери вариант</option>
           <option value="1-2 часа">1–2 часа</option>
           <option value="3-5 часов">3–5 часов</option>
@@ -482,7 +470,7 @@
 
       <div class="field">
         <label>Есть ли у тебя другие важные обязательства (секции, репетиторы и т.д.)?</label>
-        <input type="text" id="obligations" placeholder="Напиши если есть, или оставь пустым">
+        <input type="text" id="obligations" name="Обязательства" placeholder="Напиши если есть, или оставь пустым">
       </div>
     </div>
 
@@ -493,9 +481,9 @@
       <div class="field">
         <label>Как ты реагируешь на критику своей работы? <span>*</span></label>
         <div class="radio-group" id="feedback">
-          <label class="radio-item"><input type="radio" name="feedback" value="Воспринимаю спокойно, это помогает улучшить работу"> ✅ Воспринимаю спокойно — это помогает улучшить работу</label>
-          <label class="radio-item"><input type="radio" name="feedback" value="Сначала расстраиваюсь, но потом принимаю"> 😐 Сначала расстраиваюсь, но потом принимаю</label>
-          <label class="radio-item"><input type="radio" name="feedback" value="Тяжело, но стараюсь работать над этим"> 😅 Тяжело, но стараюсь работать над этим</label>
+          <label class="radio-item"><input type="radio" name="Реакция на критику" value="Воспринимаю спокойно, это помогает улучшить работу"> ✅ Воспринимаю спокойно — это помогает улучшить работу</label>
+          <label class="radio-item"><input type="radio" name="Реакция на критику" value="Сначала расстраиваюсь, но потом принимаю"> 😐 Сначала расстраиваюсь, но потом принимаю</label>
+          <label class="radio-item"><input type="radio" name="Реакция на критику" value="Тяжело, но стараюсь работать над этим"> 😅 Тяжело, но стараюсь работать над этим</label>
         </div>
       </div>
 
@@ -525,12 +513,22 @@
 
       <div class="field">
         <label>Расскажи о случае, когда что-то пошло не так. Что ты сделал?</label>
-        <textarea id="challenge" placeholder="Это поможет нам понять, как ты справляешься с трудностями..."></textarea>
+        <textarea id="challenge" name="Трудная ситуация" placeholder="Это поможет нам понять, как ты справляешься с трудностями..."></textarea>
       </div>
     </div>
 
+    <!-- Служебные поля для FormSubmit и вычисленные значения (заполняются скриптом перед отправкой) -->
+    <input type="hidden" name="_subject" id="subjectField" value="Новая анкета">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" id="nextField" value="">
+    <input type="hidden" name="Цели" id="goalsField" value="">
+    <input type="hidden" name="Доступность" id="availabilityField" value="">
+    <input type="hidden" name="Надёжность" id="reliabilityField" value="">
+    <input type="hidden" name="Коммуникабельность" id="communicationField" value="">
+    <input type="hidden" name="Оценка совместимости (для лидера)" id="scoreField" value="">
+
     <button type="submit" class="submit-btn">Отправить анкету →</button>
-    <div class="form-error" id="formError">Не удалось отправить анкету. Проверь интернет и попробуй ещё раз.</div>
 
   </form>
 
@@ -545,9 +543,9 @@
 
 <script>
   // ====== ВАЖНО: сюда приходят ответы ======
-  // Все анкеты будут приходить на эту почту.
-  // Чтобы поменять получателя — измени адрес ниже.
-  const RECIPIENT_EMAIL = 'ismatikismatik4@gmail.com';
+  // Адрес получателя указан в атрибуте action тега <form> вверху файла:
+  // action="https://formsubmit.co/ТВОЙ_EMAIL"
+  // Чтобы сменить получателя — поменяй email прямо в этой строке.
   // =========================================
 
   // Scale buttons
@@ -574,82 +572,52 @@
     });
   });
 
-  // Form submit -> email via FormSubmit
+  // Form submit -> email via FormSubmit (обычная отправка формы, без fetch —
+  // так не упирается в ограничения браузера CORS при открытии файла напрямую)
   const form = document.getElementById('teamForm');
-  const errorBox = document.getElementById('formError');
 
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    errorBox.style.display = 'none';
+  // После отправки FormSubmit вернёт пользователя на эту же страницу с ?sent=1,
+  // и мы покажем экран "Спасибо" вместо стандартной страницы FormSubmit.
+  document.getElementById('nextField').value =
+    location.href.split('?')[0].split('#')[0] + '?sent=1';
 
+  form.addEventListener('submit', function () {
     const get = id => document.getElementById(id).value.trim();
     const name = get('name');
-    const age = get('age');
-    const contact = get('contact');
-    const motivation = get('motivation');
-    const role = document.querySelector('input[name="role"]:checked')?.value || '—';
-    const skills = get('skills');
-    const hours = get('hours');
-    const obligations = get('obligations');
-    const feedback = document.querySelector('input[name="feedback"]:checked')?.value || '—';
-    const challenge = get('challenge');
+
+    document.getElementById('subjectField').value = 'Новая анкета: ' + (name || 'без имени');
 
     const goals = [...document.querySelectorAll('#goals input:checked')].map(i => i.value).join(', ') || '—';
     const availability = [...document.querySelectorAll('#availability input:checked')].map(i => i.value).join(', ') || '—';
+    document.getElementById('goalsField').value = goals;
+    document.getElementById('availabilityField').value = availability;
 
     const reliabilityBtn = document.querySelector('#reliability .scale-btn.active');
     const commBtn = document.querySelector('#communication .scale-btn.active');
     const reliability = reliabilityBtn ? parseInt(reliabilityBtn.dataset.val) : 0;
     const communication = commBtn ? parseInt(commBtn.dataset.val) : 0;
+    document.getElementById('reliabilityField').value = reliability ? reliability + '/5' : '—';
+    document.getElementById('communicationField').value = communication ? communication + '/5' : '—';
 
     // Score (для лидера)
     const score = reliability + communication;
     let scoreText = 'Требует внимания';
     if (score >= 8) scoreText = 'Отличный кандидат';
     else if (score >= 5) scoreText = 'Хороший потенциал';
-
-    const payload = {
-      _subject: 'Новая анкета: ' + (name || 'без имени'),
-      _template: 'table',
-      _captcha: 'false',
-      'Имя': name,
-      'Возраст': age,
-      'Контакт': contact || '—',
-      'Роль': role,
-      'Цели': goals,
-      'Мотивация': motivation,
-      'Навыки': skills || '—',
-      'Часов в неделю': hours,
-      'Доступность': availability,
-      'Обязательства': obligations || '—',
-      'Реакция на критику': feedback,
-      'Надёжность': reliability + '/5',
-      'Коммуникабельность': communication + '/5',
-      'Трудная ситуация': challenge || '—',
-      'Оценка совместимости (для лидера)': scoreText + ' (' + score + '/10)'
-    };
+    document.getElementById('scoreField').value = scoreText + ' (' + score + '/10)';
 
     const btn = form.querySelector('.submit-btn');
-    const original = btn.textContent;
     btn.disabled = true;
     btn.textContent = 'Отправка...';
-
-    try {
-      const res = await fetch('https://formsubmit.co/ajax/' + RECIPIENT_EMAIL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (!res.ok) throw new Error('Bad response');
-      form.style.display = 'none';
-      document.getElementById('successScreen').style.display = 'block';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } catch (err) {
-      btn.disabled = false;
-      btn.textContent = original;
-      errorBox.style.display = 'block';
-    }
+    // дальше форма отправляется обычным способом (без preventDefault)
   });
+
+  // Если вернулись назад от FormSubmit с ?sent=1 — показываем экран "Спасибо"
+  if (location.search.includes('sent=1')) {
+    form.style.display = 'none';
+    document.getElementById('successScreen').style.display = 'block';
+    history.replaceState(null, '', location.pathname);
+  }
 </script>
 
 </body>
